@@ -12,17 +12,22 @@ import java.util.List;
 @RestController
 @RequestMapping
 public class CameraController {
+
    private final CameraService cameraService;
    public CameraController(CameraService cameraService) {
        this.cameraService = cameraService;
    }
    @PostMapping
     public ResponseEntity<Camera> CreateCamera(@Valid @RequestBody Camera camera) {
-       Camera created = cameraService.createCamera(camera)
+       Camera created = cameraService.createCamera(camera);
                return new ResponseEntity<>(created, HttpStatus.CREATED);
    }
     @GetMapping
-    public ResponseEntity<List<Camera>> GetAllCameras() {
-       return ResponseEntity.ok(CameraService.getAllCameras());
+    public ResponseEntity<List<Camera>> getAllCameras() {
+       return ResponseEntity.ok(cameraService.getAllCameras());
     }
+    @GetMapping("/id")
+    public ResponseEntity<List<Camera>> getCameraById(@PathVariable Long id) {
+       return ResponseEntity.ok(CameraService.getCameraById(id));
+   }
 }
